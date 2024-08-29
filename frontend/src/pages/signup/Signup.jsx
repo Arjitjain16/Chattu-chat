@@ -70,7 +70,7 @@ function Signup() {
 
             <Link to={"/login"} className="link link-secondary m-1.5 text-white">Already have account</Link>
             <div className='h-full'>
-                <button className='btn btn-block btn-sm mt-2 border border-slate-700' disabled={loading}>
+                <button className='btn btn-block btn-sm mt-2 py-2 border border-slate-700' disabled={loading}>
                     {loading ? <span className='loading loading-spinner'></span> : "Sign Up"}
                 </button>
             </div>

@@ -3,7 +3,7 @@ import Convo from './Convo';
 
 function Conversation() {
   return (
-    <div className='py-3 flex flex-col overflow-auto gap-4'>
+    <div className='h-full flex flex-col overflow-auto gap-1'>
       <Convo />
       <Convo />
       <Convo />
