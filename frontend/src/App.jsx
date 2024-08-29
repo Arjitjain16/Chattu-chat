@@ -1,4 +1,4 @@
-import Login from "./pages/login/Login"
+
 import Signup from "./pages/signup/Signup"
 import Toaster from "react-hot-toast"
 const App = () => {
@@ -6,6 +6,7 @@ const App = () => {
     <div>
       <Signup />
       <Toaster/>
+
     </div>
   )
 }

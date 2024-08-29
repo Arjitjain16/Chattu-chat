@@ -31,7 +31,7 @@ export const signup = async(req,res)=>{
         const boyProfilepic = "https://avatar.iran.liara.run/public/boy"
         const girlProfilepic = "https://avatar.iran.liara.run/public/girl"
 
-        const newUser =new User({
+        const newUser = new User({
             fullName,
             username,
             password:hashpassword,

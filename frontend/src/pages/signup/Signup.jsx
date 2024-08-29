@@ -1,6 +1,7 @@
 import  { useState } from 'react';
 import GenderCheckbox from './GenderCheckbox';
 import { Link } from 'react-router-dom';
+import useSignUp from '../../hooks/useSignUp';
 
 function Signup() {
     const [inputs,setInputs] = useState({
@@ -11,6 +12,7 @@ function Signup() {
         gender : ""
     })
 
+    const {loading , signup} =  useSignUp
     const handleSumit = (e)=>{
         e.preventDefault()          
         console.log(inputs)
@@ -20,7 +22,7 @@ function Signup() {
     }
 
   return (
-    <div className='flex flex-col items-center justify-center h-full p-48 min-w-96 mx-auto'>
+    <div className='flex flex-col items-center justify-center h-full p-48 w-1/2 mx-auto mt-8'>
       <div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
       <h1 className='text-3xl font-semibold text-center text-gray-300 mb-5'>
             Signup <span className='text-blue-500'> ChatApp</span>
@@ -68,8 +70,9 @@ function Signup() {
 
             <Link to={"/login"} className="link link-secondary m-1.5 text-white">Already have account</Link>
             <div className='h-full'>
-
-              <button className='bg-white h-10 input input-bordered m-1.5'>SignUp</button>
+                <button className='btn btn-block btn-sm mt-2 border border-slate-700' disabled={loading}>
+                    {loading ? <span className='loading loading-spinner'></span> : "Sign Up"}
+                </button>
             </div>
         </form>
       </div>
