@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import axios from "axios"
 
 const useSignUp = () => {
   const [loading, setLoading] = useState(false);
@@ -11,41 +12,52 @@ const useSignUp = () => {
     confirmedPassword,
     gender,
   }) => {
-    const success = handleInputErrors({
+    // Validate input fields
+    const isValid = handleInputErrors({
       fullName,
       username,
       password,
       confirmedPassword,
       gender,
     });
-    if (!success) return;
+    if (!isValid) return;
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName,
-          username,
-          password,
-          gender,
-        }),
+      const { data } = await axios.post("/api/auth/signup", {
+        fullName,
+        username,
+        password,
+        confirmedPassword,
+        gender,
       });
-      const data = await response.json();
-      console.log(data);
+
+      console.log(data)
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      localStorage.setItem("chat-user", JSON.stringify(data));
     } catch (error) {
-      console.log(error);
+      // Check if error has response object for more detailed error info
+      const errorMessage =
+        error.response && error.response.data && error.response.data.error
+          ? error.response.data.error
+          : error.message;
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
-  return (loading , signup);
+
+  return { loading, signup };
 };
 
 export default useSignUp;
 
+// Function to handle input validation
 function handleInputErrors({
   fullName,
   username,
@@ -53,22 +65,16 @@ function handleInputErrors({
   confirmedPassword,
   gender,
 }) {
-  if (
-    !fullName ||
-    !username ||
-    !password ||
-    !confirmedPassword ||
-    !gender
-  ) {
-    toast.error("Fill this field");
+  if (!fullName || !username || !password || !confirmedPassword || !gender) {
+    toast.error("All fields are required.");
     return false;
   }
   if (password !== confirmedPassword) {
-    toast.error("Password does not match");
+    toast.error("Passwords do not match.");
     return false;
   }
   if (password.length < 6) {
-    toast.error("Password should be at least 6 characters long");
+    toast.error("Password should be at least 6 characters long.");
     return false;
   }
   return true;

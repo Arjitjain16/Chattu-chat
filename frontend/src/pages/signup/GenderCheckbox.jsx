@@ -4,7 +4,7 @@ function GenderCheckbox({ oncheckboxChnge, selectedGender}) {
   return (
     <div className='flex'> 
         <div className="form-control">
-        <label className="cursor-pointer label flex gap-2 `${selectedGender}">
+        <label className={`cursor-pointer label flex gap-2 ${selectedGender}`}>
             <span className="label-text text-white">Male</span>
             <input type="checkbox" defaultChecked className="checkbox checkbox-info" 
             checked = {selectedGender === "male"}
