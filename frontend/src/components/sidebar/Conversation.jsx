@@ -1,16 +1,24 @@
-import React from 'react';
-import Convo from './Convo';
 
-function Conversation() {
-  return (
-    <div className='h-full flex flex-col overflow-auto gap-1'>
-      <Convo />
-      <Convo />
-      <Convo />
-      <Convo />
-      <Convo />
-    </div>
-  );
-}
+  import useConversation from '../../hooks/useConversation';
+  import Convo from './Convo'; 
+  import {getRandomEmoji} from "../../utils/emoji"
 
-export default Conversation;
+  function Conversation() {
+    const {loading , conversations} = useConversation()
+    return (
+      <div className='h-full flex flex-col overflow-auto gap-1'>
+        {conversations.map((conversation, idx) => (
+				<Convo
+					key={conversation._id}
+					conversation={conversation}
+					emoji={getRandomEmoji()}
+					lastIdx={idx === conversations.length - 1}
+				/>
+			))}
+
+        {loading ? <span className='loading laoding-spinner mx-auto'></span> : null}
+      </div>
+    );
+  }
+
+  export default Conversation;
