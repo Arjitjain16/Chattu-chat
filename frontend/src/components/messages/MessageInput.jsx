@@ -1,17 +1,33 @@
-import React from 'react';
+import  { useState } from 'react';
 import { IoMdSend } from "react-icons/io";
+import useSendMessage from '../../hooks/useSendMessage';
 
-function MessageInput() {
-  return (
-    <div className='px-2'>
-      <form action="" className='border-none outline-none w-[100%]'>
-        <div className=' w-[100%]  flex items-center justify-between border-none outline-none relative p-3'> 
-        <input type="text" placeholder="Send a message" className="w-full py-4 px-2 rounded-md  border-none outline-none bg-[#2B333F] text-white" />
-        <button type="submit" className=" text-white absolute right-6 h-28 "><IoMdSend className='text-slate-400 ' /></button>
-        </div>
-      </form>
-    </div>
-  );
-}
+const MessageInput = () => {
+	const [message, setMessage] = useState("");
+	const { loading, sendMessage } = useSendMessage();
 
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (!message) return;
+		await sendMessage(message);
+		setMessage("");
+	};
+
+	return (
+		<form className='px-4 my-3' onSubmit={handleSubmit}>
+			<div className='w-full relative'>
+				<input
+					type='text'
+					className='border text-sm rounded-lg block w-full p-2.5  bg-gray-700 border-gray-600 text-white'
+					placeholder='Send a message'
+					value={message}
+					onChange={(e) => setMessage(e.target.value)}
+				/>
+				<button type='submit' className='absolute inset-y-0 end-0 flex items-center pe-3'>
+					{loading ? <div className='loading loading-spinner'></div> : <IoMdSend/>}
+				</button>
+			</div>
+		</form>
+	);
+};
 export default MessageInput;

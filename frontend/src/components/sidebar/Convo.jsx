@@ -1,19 +1,34 @@
-function Convo({ conversation, lastIdx, emoji}) {
-  return (
-    <div className="flex items-center justify-between w-full hover:bg-[#0EA5EA] rounded px-2 py-2 cursor-pointer">
-      <div className="flex items-center gap-3">
-        <div className="avatar online placeholder">
-          <div className="ring-primary ring-offset-base-100 w-12 rounded-full ring ring-offset-2">
-            <img src={conversation.profilePic} alt={`${conversation.fullName}'s avatar`} />
-          </div>
-        </div>
-        <h1 className="text-white">{conversation.fullName}</h1>
-      </div>
-      <div>
-        <span className="text-xl">{emoji}</span>
-      </div>
-    </div>
-  );
-}
+import useZConversation from "../../zustand/useZConversation";
 
-export default Convo;
+const Conversation = ({ conversation, lastIdx, emoji,}) => {
+	const { selectedConversation, setSelectedConversation } = useZConversation();
+
+	const isSelected = selectedConversation?._id === conversation._id;
+	return (
+		<>
+			<div
+				className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 cursor-pointer
+				${isSelected ? "bg-sky-500" : ""}
+			`}
+				onClick={() => setSelectedConversation(conversation)}
+			>
+				<div className="">
+					<div className='w-12 rounded-full'>
+						<img src={conversation.profilePic} alt='user avatar' />
+					</div>
+				</div>
+
+				<div className='flex flex-col flex-1'>
+					<div className='flex gap-3 justify-between'>
+						<p className='font-bold text-gray-200'>{conversation.fullName}</p>
+						<span className='text-xl'>{emoji}</span>
+					</div>
+				</div>
+			</div>
+
+			{!lastIdx && <div className='divider my-0 py-0 h-1' />}
+		</>
+	);
+};
+
+export default Conversation;
