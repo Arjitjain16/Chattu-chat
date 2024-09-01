@@ -40,7 +40,7 @@ function Login() {
             <Link to="/signup" className="link link-secondary m-1.5 text-white mb-2">Not have any account</Link>
             <div>
            <button className='bg-[#171B20] text-white h-10 w-full input input-bordered m-1.5'>
-            {loading ? <span className='loading loading-spinner'></span> : "Sign Up"}
+            {loading ? <span className='loading loading-spinner'></span> : "Sign In"}
            </button>
             </div>
         </form>
